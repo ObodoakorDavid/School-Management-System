@@ -1,0 +1,28 @@
+<!-- @format -->
+{% extends 'base.html' %} {% block content %}
+<h1>All Students</h1>
+
+<div class="row">
+  <div class="col-12">
+    {% if students %}
+
+    {% for student in students %}
+
+    <div class="card text-bg-light ms-4 me-4 mb-4" style="max-width: 18rem">
+      <div class="card-header">{{student.first_name}}</div>
+      <div class="card-body">
+        <h5 class="card-title">Light card title</h5>
+        <p class="card-text">
+          Some quick example text to build on the card title and make up the
+          bulk of the card's content.
+        </p>
+      </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h5 class="alert alert-primary ms-4 me-4">No Student Records</h5>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
