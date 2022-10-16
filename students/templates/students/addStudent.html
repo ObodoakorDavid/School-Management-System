@@ -1,0 +1,14 @@
+<!-- @format -->
+{% extends 'base.html' %} {% block content %}
+<h1>Add Student</h1>
+
+{% if user.is_superuser %}
+<form action="" method="post">
+  {% csrf_token %} {{form.as_p}} <input type="submit" value="Add Student" />
+</form>
+
+{% else %}
+
+<p>You don't have the permission to add a new student</p>
+
+{% endif %} {% endblock %}
