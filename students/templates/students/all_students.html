@@ -4,6 +4,7 @@
 
 <div class="row">
   <div class="col-12">
+    {% if students %}
     <table class="table">
       <thead>
         <tr>
@@ -15,10 +16,11 @@
           {% if user.is_superuser %}
           <th scope="col">Detail</th>
           <th scope="col">Delete</th>
+          <th scope="col">Update</th>
           {% endif %}
         </tr>
       </thead>
-      {% if students %} {% for student in students %}
+      {% for student in students %}
 
       <tbody>
         <tr>
@@ -36,6 +38,11 @@
           <td scope="col">
             <a href="{% url 'students:student_delete' student.id %}"
               ><img src="{% static 'images/trash.svg' %}" alt=""
+            /></a>
+          </td>
+          <td scope="col">
+            <a href="{% url 'students:student_update' student.id %}"
+              ><img src="{% static 'images/arrow-repeat.svg' %}" alt=""
             /></a>
           </td>
           {% endif %}

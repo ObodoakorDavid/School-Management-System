@@ -44,3 +44,15 @@ def student_delete(request, id):
     student.delete()
     return redirect('students:index')
 
+def student_update(request, id):
+    student = Student.objects.get(pk=id)
+    form = StudentForm(request.POST or None, instance=student)
+    context = {
+        'form': form
+    }
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('students:index')
+    return render(request, 'students/students_update.html', context)
+
