@@ -1,5 +1,4 @@
-from multiprocessing import context
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import Student
 from .form import StudentForm
 from django.contrib.auth.decorators import login_required
@@ -11,7 +10,7 @@ def students(request):
     context = {
         'students': students
     }
-    return render(request, 'students/allStudents.html', context)
+    return render(request, 'students/all_students.html', context)
 
 @login_required(login_url='accounts:signup')
 def add_student(request):
@@ -20,8 +19,28 @@ def add_student(request):
     context = {
         'form': form
     }
-    return render(request, 'students/addStudent.html', context)
+
+    if request.method == 'POST':
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+            form.save()
+            return redirect('students:index')
+    return render(request, 'students/add_student.html', context)
 
 
 def home_view(request):
     return render(request,'Home.html' )
+
+def student_detail(request, id):
+    student = Student.objects.get(pk=id)
+    context = {
+        'student': student
+    }
+    return render(request, 'students/student_detail.html', context)
+
+def student_delete(request, id):
+    student = Student.objects.get(pk=id)
+    student.delete()
+    return redirect('students:index')
+

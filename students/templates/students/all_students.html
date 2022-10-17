@@ -1,5 +1,5 @@
 <!-- @format -->
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <h1>All Students</h1>
 
 <div class="row">
@@ -11,8 +11,10 @@
           <th scope="col">FirstName</th>
           <th scope="col">LastName</th>
           <th scope="col">Course</th>
+          <th scope="col">CGPA</th>
           {% if user.is_superuser %}
-          <th scope="col">Status</th>
+          <th scope="col">Detail</th>
+          <th scope="col">Delete</th>
           {% endif %}
         </tr>
       </thead>
@@ -24,22 +26,20 @@
           <td>{{student.first_name}}</td>
           <td>{{student.last_name}}</td>
           <td>{{student.course}}</td>
+          <td>{{student.gpa}}</td>
           {% if user.is_superuser %}
-          <td scope="col">Delete</td>
+          <td scope="col">
+            <a href="{% url 'students:student_detail' student.id %}"
+              ><img src="{% static 'images/info-circle.svg' %}" alt=""
+            /></a>
+          </td>
+          <td scope="col">
+            <a href="{% url 'students:student_delete' student.id %}"
+              ><img src="{% static 'images/trash.svg' %}" alt=""
+            /></a>
+          </td>
           {% endif %}
         </tr>
-        <!-- <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr> -->
       </tbody>
       {% endfor %}
     </table>
